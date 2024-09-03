@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id                String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  phoneNumber       String
+  position          String
+  departmentId      String
+  department        Department @relation(fields: [departmentId], references: [id])
+  salary            Decimal
+  dateOfJoining     DateTime
+  bankAccountNumber String
+  bankName          String
+  paySlips          PaySlip[]
+}
+
+model PaySlip {
+  id          String   @id @default(uuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  basicSalary Decimal
+  bonuses     Decimal
+  deductions  Decimal
+  netSalary   Decimal
+  payDate     DateTime
+  month       String
+  year        String
+}
+
+model Department {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  employees   Employee[]
+}
