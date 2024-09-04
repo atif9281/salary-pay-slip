@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model Department {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  employees   Employee[]
+}
+
+
 model Employee {
   id                String   @id @default(uuid())
   firstName         String
@@ -34,11 +43,4 @@ model PaySlip {
   payDate     DateTime
   month       String
   year        String
-}
-
-model Department {
-  id          String    @id @default(uuid())
-  name        String
-  description String
-  employees   Employee[]
 }
