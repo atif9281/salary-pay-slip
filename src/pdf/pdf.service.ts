@@ -61,6 +61,16 @@ export class PdfService {
                 bankTitle: { x: 120, y: 532 },
                 accountNo: { x: 129, y: 517 },
                 location: { x: 144, y: 408 },
+                basicSalary: { x: 500, y: 600 },
+                totalWorkingDays: { x: 100, y: 350 },
+                daysWorked: { x: 250, y: 350 },
+                paidLeaves: { x: 390, y: 350 },
+                unpaidLeaves: { x: 500, y: 350 },
+                deductions: { x: 420, y: 190 },
+
+                bonuses: { x: 420, y: 170 },
+                netSalary: { x: 420, y: 131 },
+                payDate: { x: 113, y: 103 },
             };
 
             // Add employee information
@@ -70,7 +80,6 @@ export class PdfService {
                 size: 11,
                 font,
                 color: rgb(0, 0, 0), // Black
-                
             });
             page.drawText(`${payslip.employee.firstName} ${payslip.employee.lastName}`, {
                 x: positions.employeeName.x,
@@ -114,10 +123,83 @@ export class PdfService {
                 font,
                 color: rgb(0, 0, 0), // Black
             });
-            page.drawText(``, {
-                x: positions.location.x,
-                y: positions.location.y,
-                size: 12,
+            page.drawText(`${payslip.basicSalary}`, {
+                x: positions.basicSalary.x,
+                y: positions.basicSalary.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+            page.drawText(`${payslip.totalWorkingDays}`, {
+                x: positions.totalWorkingDays.x,
+                y: positions.totalWorkingDays.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+            page.drawText(`${payslip.daysWorked}`, {
+                x: positions.daysWorked.x,
+                y: positions.daysWorked.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+            page.drawText(`${payslip.paidLeaves}`, {
+                x: positions.paidLeaves.x,
+                y: positions.paidLeaves.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+            page.drawText(`${payslip.unpaidLeaves}`, {
+                x: positions.unpaidLeaves.x,
+                y: positions.unpaidLeaves.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+
+            // Convert Decimal to number and round them to the nearest whole number
+            const formattedDeductions = Math.round(payslip.deductions.toNumber());
+            const formattedBonuses = Math.round(payslip.bonuses.toNumber());
+            const formattedNetSalary = Math.round(payslip.netSalary.toNumber());
+
+            // Draw the formatted numbers on the PDF
+            page.drawText(`${formattedDeductions}`, {
+                x: positions.deductions.x,
+                y: positions.deductions.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+
+            page.drawText(`${formattedBonuses}`, {
+                x: positions.bonuses.x,
+                y: positions.bonuses.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+
+            page.drawText(`${formattedNetSalary}`, {
+                x: positions.netSalary.x,
+                y: positions.netSalary.y,
+                size: 11,
+                font,
+                color: rgb(0, 0, 0), // Black
+            });
+            const payDate = new Date(payslip.payDate);
+            const formattedDate = payDate.toLocaleDateString('en-US', {
+                weekday: 'long', // e.g. "Monday"
+                year: 'numeric', // e.g. "2024"
+                month: 'long',   // e.g. "September"
+                day: 'numeric'   // e.g. "5"
+            });
+
+            page.drawText(formattedDate, {
+                x: positions.payDate.x,
+                y: positions.payDate.y,
+                size: 11,
                 font,
                 color: rgb(0, 0, 0), // Black
             });
