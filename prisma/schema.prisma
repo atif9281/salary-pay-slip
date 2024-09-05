@@ -37,8 +37,8 @@ model PaySlip {
   employeeId  String
   employee    Employee @relation(fields: [employeeId], references: [id])
   basicSalary Decimal
-  bonuses     Decimal
-  deductions  Decimal
+  bonuses     Decimal  @default(0.0)
+  deductions  Decimal  @default(0.0)
   netSalary   Decimal
   payDate     DateTime
   month       String

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "PaySlip" ALTER COLUMN "bonuses" SET DEFAULT 0.0,
+ALTER COLUMN "deductions" SET DEFAULT 0.0;
