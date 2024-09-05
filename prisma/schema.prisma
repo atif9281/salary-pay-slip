@@ -43,4 +43,8 @@ model PaySlip {
   payDate     DateTime
   month       String
   year        String
+  totalWorkingDays Int   @default(0)  
+  daysWorked      Int    @default(0) 
+  paidLeaves      Int    @default(0)
+  unpaidLeaves    Int    @default(0)
 }

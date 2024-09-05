@@ -47,6 +47,10 @@ export class PaySlipService {
     const deduction = oneDayIncome * absenteesExcludingPaidLeave;
     const netSalary = basicSalaryNumber + bonus - deduction;
 
+    // Calculate paid and unpaid leaves
+    const paidLeaves = daysWorked < totalWorkingDays ? 1 : 0;
+    const unpaidLeaves = daysWorked >= totalWorkingDays ? 0 : totalWorkingDays - daysWorked - paidLeaves;
+
     try {
       return await this.prisma.paySlip.create({
         data: {
@@ -60,6 +64,10 @@ export class PaySlipService {
           bonuses: bonus,
           deductions: deduction,
           netSalary: netSalary,
+          totalWorkingDays, // Add totalWorkingDays
+          daysWorked,       // Add daysWorked
+          paidLeaves,       // Add paidLeaves
+          unpaidLeaves,     // Add unpaidLeaves
         },
       });
     } catch (error) {
@@ -102,6 +110,10 @@ export class PaySlipService {
     const deduction = oneDayIncome * absenteesExcludingPaidLeave;
     const netSalary = basicSalaryNumber + bonus - deduction;
 
+    // Calculate paid and unpaid leaves
+    const paidLeaves = daysWorked < totalWorkingDays ? 1 : 0;
+    const unpaidLeaves = daysWorked >= totalWorkingDays ? 0 : totalWorkingDays - daysWorked - paidLeaves;
+
     try {
       return await this.prisma.paySlip.update({
         where: { id: id },
@@ -110,6 +122,10 @@ export class PaySlipService {
           bonuses: bonus,
           deductions: deduction,
           netSalary: netSalary,
+          totalWorkingDays, // Update totalWorkingDays
+          daysWorked,       // Update daysWorked
+          paidLeaves,       // Update paidLeaves
+          unpaidLeaves,     // Update unpaidLeaves
         },
       });
     } catch (error) {
